@@ -17,6 +17,9 @@ class Terminal
     /** @var \Spatie\PhpUnitWatcher\Screens\Screen */
     protected $currentScreen = null;
 
+    /** @var \Yosymfony\ResourceWatcher\ResourceWatcher */
+    protected $watcher = null;
+
     public function __construct(Stdio $io)
     {
         $this->io = $io;
@@ -109,11 +112,13 @@ class Terminal
         return $this->previousScreen;
     }
 
-    public function refreshScreen()
+    public function refreshScreen($watcher = null)
     {
         if (is_null($this->currentScreen)) {
             return;
         }
+
+        $this->watcher = $watcher;
 
         $this->displayScreen($this->currentScreen);
 
@@ -158,5 +163,10 @@ class Terminal
     public function getStdio()
     {
         return $this->io;
+    }
+
+    public function getWatcher()
+    {
+        return $this->watcher;
     }
 }

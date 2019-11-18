@@ -47,6 +47,7 @@ class WatcherFactory
                 'failingTests' => true,
             ],
             'hideManual' => false,
+            'onlyChanged' => true,
         ], $options);
 
         $options['watch']['directories'] = array_map(function ($directory) {

@@ -51,7 +51,7 @@ class Watcher
             $watcher->findChanges();
 
             if ($watcher->hasChanges()) {
-                $this->terminal->refreshScreen();
+                $this->terminal->refreshScreen($watcher);
             }
         });
 

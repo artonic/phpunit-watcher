@@ -29,6 +29,23 @@ class Phpunit extends Screen
 
     public function draw()
     {
+        if ($this->options['onlyChanged']) {
+            $this->phpunitArguments = '';
+
+            if ($this->terminal->getWatcher() && !empty($this->terminal->getWatcher()->getUpdatedResources())) {
+                $filter = array_map(function ($resource) {
+                    $changedFile = basename($resource, '.php');
+                    if (preg_match('/Test$/', $changedFile)) {
+                        return $changedFile;
+                    } else {
+                        return $changedFile . 'Test';
+                    }
+                }, $this->terminal->getWatcher()->getUpdatedResources());
+
+                $this->phpunitArguments .= ' --filter ' . implode(' ', $filter);
+            }
+        }
+
         $this
             ->writeHeader()
             ->runTests()
